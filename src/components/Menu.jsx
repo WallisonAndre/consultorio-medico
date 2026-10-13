@@ -3,11 +3,13 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Button, Dropdown } from '@heroui/react'
 import { useAuth } from '../AuthContext'
 import { Foto } from './Foto'
+import { Navbar } from './Navbar'
 
-const classeLink = ({ isActive }) =>
-  `rounded-md px-2 py-1.5 text-sm font-medium no-underline ${
-    isActive ? 'bg-white/15 text-white' : 'text-blue-100 hover:bg-white/10 hover:text-white'
+function classeNav({ isActive }) {
+  return `rounded-md px-3 py-2 text-sm font-medium transition-colors no-underline ${
+    isActive ? 'text-accent' : 'text-muted hover:bg-default/50 hover:text-foreground'
   }`
+}
 
 export function Menu() {
   const { usuario, pode, inicio, sair } = useAuth()
@@ -39,22 +41,86 @@ export function Menu() {
   )
 
   return (
-    <header className="bg-[#0a2f5f] text-white shadow-sm">
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-3">
-        <Link to={inicio} className="flex items-center text-lg font-bold text-white no-underline">
+    <Navbar
+      menu={
+        aberto && (
+          <div className="border-t border-separator md:hidden">
+            <ul className="flex flex-col gap-1 p-4">
+              {itensPrincipais.map((item) => (
+                <li key={item.para}>
+                  <NavLink
+                    to={item.para}
+                    className={classeNav}
+                    onClick={() => setAberto(false)}
+                  >
+                    {item.rotulo}
+                  </NavLink>
+                </li>
+              ))}
+              {pode('api.change_organizacao') &&
+                itensCadastros.map((item) => (
+                  <li key={item.para}>
+                    <Link
+                      to={item.para}
+                      className="block rounded-md px-3 py-2 text-sm font-medium text-muted no-underline transition-colors hover:bg-default/50 hover:text-foreground"
+                      onClick={() => setAberto(false)}
+                    >
+                      {item.rotulo}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+            <div className="flex flex-col gap-1 border-t border-separator p-4 md:hidden">
+              <Link
+                to="/perfil"
+                className="rounded-md px-3 py-2 text-sm font-medium text-muted no-underline transition-colors hover:bg-default/50 hover:text-foreground"
+                onClick={() => setAberto(false)}
+              >
+                <i className="bi bi-person"></i> Meu perfil
+              </Link>
+              <button
+                type="button"
+                className="rounded-md px-3 py-2 text-left text-sm font-medium text-muted transition-colors hover:bg-default/50 hover:text-foreground"
+                onClick={() => {
+                  setAberto(false)
+                  sair()
+                }}
+              >
+                <i className="bi bi-box-arrow-right"></i> Sair
+              </button>
+            </div>
+          </div>
+        )
+      }
+    >
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          isIconOnly
+          aria-label="Alternar menu"
+          className="text-foreground md:hidden"
+          onPress={() => setAberto(!aberto)}
+        >
+          <i className={`bi text-xl ${aberto ? 'bi-x-lg' : 'bi-list'}`} />
+        </Button>
+        <Link to={inicio} className="flex items-center text-lg font-bold text-foreground no-underline">
           {logo}
           {organizacao.nome}
         </Link>
+      </div>
 
-        <nav className="ms-4 hidden items-center gap-1 md:flex">
-          {itensPrincipais.map((item) => (
-            <NavLink key={item.para} to={item.para} className={classeLink}>
+      <ul className="hidden items-center gap-1 ms-4 md:flex">
+        {itensPrincipais.map((item) => (
+          <li key={item.para}>
+            <NavLink to={item.para} className={classeNav}>
               {item.rotulo}
             </NavLink>
-          ))}
-          {pode('api.change_organizacao') && (
+          </li>
+        ))}
+        {pode('api.change_organizacao') && (
+          <li>
             <Dropdown>
-              <Dropdown.Trigger className="rounded-md px-2 py-1.5 text-sm font-medium text-blue-100 hover:bg-white/10 hover:text-white">
+              <Dropdown.Trigger className="rounded-md px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-default/50 hover:text-foreground">
                 Cadastros
               </Dropdown.Trigger>
               <Dropdown.Popover>
@@ -71,66 +137,28 @@ export function Menu() {
                 </Dropdown.Menu>
               </Dropdown.Popover>
             </Dropdown>
-          )}
-        </nav>
+          </li>
+        )}
+      </ul>
 
-        <div className="ms-auto hidden md:block">
-          <Dropdown>
-            <Dropdown.Trigger className="flex items-center gap-2 text-sm font-medium text-white no-underline">
-              <Foto src={usuario.foto} tamanho={24} />
-              {usuario.nome}
-            </Dropdown.Trigger>
-            <Dropdown.Popover placement="bottom right">
-              <Dropdown.Menu>
-                <Dropdown.Item id="perfil" onAction={() => navegar('/perfil')}>
-                  <i className="bi bi-person"></i> Meu perfil
-                </Dropdown.Item>
-                <Dropdown.Item id="sair" onAction={sair}>
-                  <i className="bi bi-box-arrow-right"></i> Sair
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown.Popover>
-          </Dropdown>
-        </div>
-
-        <Button
-          variant="ghost"
-          isIconOnly
-          className="ms-auto text-white md:hidden"
-          onPress={() => setAberto(!aberto)}
-        >
-          <i className={`bi ${aberto ? 'bi-x-lg' : 'bi-list'}`} />
-        </Button>
+      <div className="ms-auto hidden md:block">
+        <Dropdown>
+          <Dropdown.Trigger className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-default/50">
+            <Foto src={usuario.foto} tamanho={24} />
+            {usuario.nome}
+          </Dropdown.Trigger>
+          <Dropdown.Popover placement="bottom right">
+            <Dropdown.Menu>
+              <Dropdown.Item id="perfil" onAction={() => navegar('/perfil')}>
+                <i className="bi bi-person"></i> Meu perfil
+              </Dropdown.Item>
+              <Dropdown.Item id="sair" onAction={sair}>
+                <i className="bi bi-box-arrow-right"></i> Sair
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown.Popover>
+        </Dropdown>
       </div>
-
-      {aberto && (
-        <nav className="space-y-1 border-t border-white/10 px-4 py-2 md:hidden">
-          {itensPrincipais.map((item) => (
-            <NavLink key={item.para} to={item.para} className={classeLink} onClick={() => setAberto(false)}>
-              {item.rotulo}
-            </NavLink>
-          ))}
-          {pode('api.change_organizacao') &&
-            itensCadastros.map((item) => (
-              <Link key={item.para} to={item.para} className={classeLink} onClick={() => setAberto(false)}>
-                {item.rotulo}
-              </Link>
-            ))}
-          <Link to="/perfil" className={classeLink} onClick={() => setAberto(false)}>
-            <i className="bi bi-person"></i> Meu perfil
-          </Link>
-          <button
-            type="button"
-            className="w-full rounded-md px-2 py-1.5 text-left text-sm font-medium text-blue-100 hover:bg-white/10 hover:text-white"
-            onClick={() => {
-              setAberto(false)
-              sair()
-            }}
-          >
-            <i className="bi bi-box-arrow-right"></i> Sair
-          </button>
-        </nav>
-      )}
-    </header>
+    </Navbar>
   )
 }

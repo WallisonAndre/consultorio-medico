@@ -6,3 +6,51 @@
  * e ele já inclui o Tailwind CSS v4 e o tema (`--radius`, `--primary`, etc.).
  */
 @import "@heroui/styles";
+
+/*
+ * Paleta de cores extraída da logo (verde-azulado "teal").
+ *
+ * Sobrescreve o tema claro padrão do HeroUI mantendo os tokens. As
+ * declarações sem camada vencem as do `@layer theme` do HeroUI.
+ */
+:root {
+  /* Base */
+  --background: #f2faf7;
+  --foreground: #0d2b2c;
+
+  /* Superfícies (cards, tabelas...) */
+  --surface: #ffffff;
+  --surface-foreground: #0d2b2c;
+  --surface-secondary: #e8f4f0;
+  --surface-secondary-foreground: #0d2b2c;
+  --surface-tertiary: #dfefea;
+  --surface-tertiary-foreground: #0d2b2c;
+
+  /* Overlays (popovers, menus, modais) */
+  --overlay: #ffffff;
+  --overlay-foreground: #0d2b2c;
+
+  /* Neutros */
+  --muted: #52706e;
+  --default: #e4f0ed;
+  --default-foreground: #0d2b2c;
+
+  /* Cor principal (acento) */
+  --accent: #007d6a;
+  --accent-foreground: #ffffff;
+  --accent-hover: #006b5c;
+  --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+  --accent-soft-foreground: #005b4e;
+  --accent-soft-hover: color-mix(in oklab, var(--accent) 18%, transparent);
+
+  /* Campos de formulário */
+  --field-background: #ffffff;
+
+  /* Separações e bordas */
+  --separator: #d9e8e4;
+  --border: #cfe0dc;
+  --separator-secondary: #cfdfdc;
+  --separator-tertiary: #c2d5d1;
+  --border-secondary: #bccfcc;
+  --border-tertiary: #a9c0bc;
+}
