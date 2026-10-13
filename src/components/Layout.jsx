@@ -1,4 +1,3 @@
-import { Container } from 'react-bootstrap'
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import { Carregando } from './Carregando'
@@ -17,9 +16,9 @@ export function Layout() {
   return (
     <>
       <Menu />
-      <Container className="my-4">
+      <div className="mx-auto w-full max-w-6xl px-4 py-4">
         <Outlet />
-      </Container>
+      </div>
     </>
   )
 }

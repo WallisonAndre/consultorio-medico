@@ -1,4 +1,5 @@
-import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
+import { Card } from '@heroui/react'
+import { buttonVariants } from '@heroui/styles'
 import { Link } from 'react-router-dom'
 import { api } from '../api/client'
 import { useAuth } from '../AuthContext'
@@ -36,29 +37,29 @@ export function Inicio() {
   const { nome, descricao, logo } = organizacao.dados
 
   return (
-    <Row className="g-4">
-      <Col md={5}>
-        <Card className="text-center h-100">
-          <Card.Body>
-            <Image src={logo ?? '/logo.png'} alt={nome} fluid className="mb-3" />
-            <Card.Text className="text-secondary">{descricao}</Card.Text>
-          </Card.Body>
+    <div className="grid gap-4 md:grid-cols-12">
+      <div className="md:col-span-5">
+        <Card className="text-center h-full">
+          <Card.Content>
+            <img src={logo ?? '/logo.png'} alt={nome} className="mb-3 w-full" />
+            <Card.Description className="text-gray-500">{descricao}</Card.Description>
+          </Card.Content>
         </Card>
-      </Col>
-      <Col md={7}>
+      </div>
+      <div className="md:col-span-7">
         <h2>Olá, {usuario.nome}!</h2>
         <h5 className="mt-4">Sua próxima consulta</h5>
         {consulta.dados ? (
-          <ListGroup className="mb-3">
+          <div className="divide-y divide-gray-200 overflow-hidden rounded-lg border border-gray-200 mb-3">
             <ConsultaItem consulta={consulta.dados} />
-          </ListGroup>
+          </div>
         ) : (
-          <p className="text-secondary">Você não tem consultas agendadas.</p>
+          <p className="text-gray-500">Você não tem consultas agendadas.</p>
         )}
-        <Button as={Link} to="/agendar" size="lg">
+        <Link to="/agendar" className={buttonVariants({ variant: 'primary', size: 'lg' })}>
           <i className="bi bi-calendar-plus"></i> Agendar
-        </Button>
-      </Col>
-    </Row>
+        </Link>
+      </div>
+    </div>
   )
 }

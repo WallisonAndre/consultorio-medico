@@ -1,4 +1,3 @@
-import { ListGroup } from 'react-bootstrap'
 import { usePaginado } from '../hooks/useApi'
 import { Carregando } from './Carregando'
 import { CarregarMais } from './CarregarMais'
@@ -12,12 +11,12 @@ export function ListaConsultas({ caminho, vazio = 'Nenhuma consulta aqui.', most
 
   return (
     <>
-      {!consultas.carregando && consultas.itens.length === 0 && <p className="text-secondary">{vazio}</p>}
-      <ListGroup>
+      {!consultas.carregando && consultas.itens.length === 0 && <p className="text-gray-500">{vazio}</p>}
+      <div className="divide-y divide-gray-200 overflow-hidden rounded-lg border border-gray-200">
         {consultas.itens.map(consulta => (
           <ConsultaItem key={consulta.id} consulta={consulta} mostrarPaciente={mostrarPaciente} />
         ))}
-      </ListGroup>
+      </div>
       {consultas.carregando ? <Carregando /> : <CarregarMais lista={consultas} />}
     </>
   )

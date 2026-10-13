@@ -1,4 +1,4 @@
-import { Alert, Col, Form, ListGroup, Row } from 'react-bootstrap'
+import { Alert, ListBox, Select } from '@heroui/react'
 import { useSearchParams } from 'react-router-dom'
 import { buscarTodas } from '../../api/client'
 import { Carregando } from '../../components/Carregando'
@@ -29,28 +29,42 @@ export function Agenda() {
   return (
     <>
       <h2 className="mb-4">Agenda do dia</h2>
-      <Row>
-        <Col md={6}>
+      <div className="mb-4 grid gap-4 md:grid-cols-2">
+        <div>
           <SeletorData data={data} onChange={valor => mudar('data', valor)} />
-        </Col>
-        <Col md={6}>
-          <Form.Select className="mb-4" value={recurso} onChange={e => mudar('recurso', e.target.value)}>
-            <option value="">Todos os médicos</option>
-            {recursos.dados?.map(r => (
-              <option key={r.id} value={r.id}>{r.nome}</option>
-            ))}
-          </Form.Select>
-        </Col>
-      </Row>
+        </div>
+        <div>
+          <Select
+            className="mb-4"
+            aria-label="Médico"
+            placeholder="Todos os médicos"
+            selectedKey={recurso ? String(recurso) : 'todos'}
+            onSelectionChange={k => mudar('recurso', k === 'todos' || k === null ? '' : k)}
+          >
+            <Select.Trigger>
+              <Select.Value />
+              <Select.Indicator />
+            </Select.Trigger>
+            <Select.Popover>
+              <ListBox>
+                <ListBox.Item id="todos" textValue="Todos os médicos">Todos os médicos</ListBox.Item>
+                {recursos.dados?.map(r => (
+                  <ListBox.Item key={r.id} id={String(r.id)} textValue={r.nome}>{r.nome}</ListBox.Item>
+                ))}
+              </ListBox>
+            </Select.Popover>
+          </Select>
+        </div>
+      </div>
 
       {consultas.erro && <Erro erro={consultas.erro} tentarDeNovo={consultas.recarregar} />}
       {consultas.carregando && <Carregando />}
-      {consultas.dados?.length === 0 && <Alert variant="info">Nenhuma consulta neste dia.</Alert>}
-      <ListGroup>
+      {consultas.dados?.length === 0 && <Alert status="accent">Nenhuma consulta neste dia.</Alert>}
+      <div className="divide-y divide-gray-200 overflow-hidden rounded-lg border border-gray-200">
         {consultas.dados?.map(consulta => (
           <ConsultaItem key={consulta.id} consulta={consulta} mostrarPaciente />
         ))}
-      </ListGroup>
+      </div>
     </>
   )
 }

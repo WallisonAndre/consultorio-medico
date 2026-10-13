@@ -1,0 +1,8 @@
+/*
+ * Estilos do HeroUI.
+ *
+ * O HeroUI v3 NÃO traz o CSS junto dos componentes: ele vive no pacote
+ * separado `@heroui/styles`. Precisamos importá-lo UMA vez, globalmente,
+ * e ele já inclui o Tailwind CSS v4 e o tema (`--radius`, `--primary`, etc.).
+ */
+@import "@heroui/styles";
