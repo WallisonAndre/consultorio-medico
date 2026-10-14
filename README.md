@@ -1,6 +1,6 @@
 # Consultório Médico (web)
 
-Cliente web em React para a API de agendamentos, feito para a disciplina de Pós-Graduação (POS). O app é um site estático que conversa com a API pela internet: ele e a API são independentes.
+Cliente web em React para a API de agendamentos, feito para a disciplina de Programação Orientada a Serviços(POS). O app é um cliente.jsx que conversa com a API: ele e a API são independentes.
 
 ## Resumo
 
