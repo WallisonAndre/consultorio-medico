@@ -3,10 +3,9 @@ export function Foto({ src, icone = 'bi-person-circle', tamanho = 48 }) {
     return (
       <img
         src={src}
-        width={tamanho}
-        height={tamanho}
-        className="rounded-full object-cover align-middle"
         alt=""
+        className="rounded-full object-cover"
+        style={{ width: tamanho, height: tamanho, objectFit: 'cover' }}
       />
     )
   }

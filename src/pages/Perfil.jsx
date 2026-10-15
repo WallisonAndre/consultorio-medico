@@ -43,7 +43,7 @@ export function Perfil() {
       <div className="w-full max-w-xl">
         <Card>
           <Card.Content>
-            <div className="text-center mb-4">
+            <div className="mb-4 flex flex-col items-center text-center">
               <Foto src={usuario.foto} tamanho={96} />
               <h2 className="mt-2 mb-0">{usuario.nome}</h2>
               <div className="text-gray-500">{usuario.email}</div>
