@@ -1,128 +1,180 @@
-# Consultório Médico (web)
+# 🩺 Consultório Médico — Web
 
-Cliente web em React para a API de agendamentos, feito para a disciplina de Programação Orientada a Serviços(POS). O app é um cliente.jsx que conversa com a API: ele e a API são independentes.
+Cliente web desenvolvido em **React** para consumir a API de agendamentos de um consultório médico, como parte da disciplina de **Programação Orientada a Serviços (POS)** do IFRN.
 
-## Resumo
+A aplicação funciona como um cliente independente da API, permitindo que pacientes e administradores realizem suas respectivas operações por meio de uma interface web.
 
-Aplicação de agendamento para um consultório médico, com dois perfis de uso:
+---
 
-- **Paciente:** cria conta, agenda consultas, acompanha e avalia atendimentos e edita seu perfil;
-- **Administrador:** gerencia a agenda do dia, confirma/cancela pedidos, cadastra médicos, serviços e horários, e acompanha as avaliações.
+## 📋 Sobre o projeto
 
-O menu e as ações aparecem conforme as **permissões** do usuário (`pode('api.confirmar_agendamento')`), e não pelo nome do grupo.
+O sistema tem como objetivo facilitar o gerenciamento de consultas médicas, oferecendo funcionalidades específicas para dois perfis de usuários:
 
-## Stack
+- **👤 Paciente:** cria uma conta, agenda consultas, acompanha atendimentos, avalia consultas concluídas e edita seu perfil.
+- **🛠️ Administrador:** gerencia a agenda, confirma ou cancela agendamentos, cadastra médicos, serviços e horários, além de acompanhar as avaliações.
 
-- [React 19](https://react.dev/) — biblioteca de UI
-- [Vite 8](https://vite.dev/) — build e servidor de desenvolvimento
-- [React Router 7](https://reactrouter.com/) — rotas do lado do cliente
-- [HeroUI v3](https://www.heroui.com/) — biblioteca de componentes
-- [Tailwind CSS v4](https://tailwindcss.com/) — utilitários de estilo (base do HeroUI)
-- [Bootstrap Icons](https://icons.getbootstrap.com/) — ícones (`bi bi-...`)
-- [oxlint](https://oxc.rs/docs/guide/usage/linter.html) — lint
+O menu e as ações disponíveis são definidos pelas **permissões do usuário**, como `pode('api.confirmar_agendamento')`, e não apenas pelo nome do grupo ao qual ele pertence.
 
-## Biblioteca de componentes
+## 🚀 Tecnologias utilizadas
 
-Os componentes vêm do **[HeroUI v3](https://www.heroui.com/)** (`@heroui/react`), cujos estilos ficam no pacote separado `@heroui/styles`.
+| Tecnologia | Descrição |
+|---|---|
+| [React 19](https://react.dev/) | Biblioteca para construção da interface |
+| [Vite 8](https://vite.dev/) | Ferramenta de desenvolvimento e build |
+| [React Router 7](https://reactrouter.com/) | Gerenciamento das rotas da aplicação |
+| [HeroUI v3](https://www.heroui.com/) | Biblioteca de componentes de interface |
+| [Tailwind CSS v4](https://tailwindcss.com/) | Utilitários para estilização |
+| [Bootstrap Icons](https://icons.getbootstrap.com/) | Biblioteca de ícones |
+| [oxlint](https://oxc.rs/docs/guide/usage/linter.html) | Ferramenta de análise estática do código |
 
-Componentes usados: `Alert`, `Button`, `Card`, `Checkbox`, `Chip`, `Description`, `Dropdown`, `FieldError`, `Form`, `Input`, `InputGroup`, `Label`, `ListBox`, `Modal`, `Select`, `Spinner`, `Switch`, `Tabs`, `TextArea` e `TextField`. O helper `buttonVariants` (de `@heroui/styles`) permite estilizar `<Link>` como botão.
+## 🧩 Biblioteca de componentes
 
-## Variáveis de ambiente
+A interface utiliza o **[HeroUI v3](https://www.heroui.com/)**, por meio do pacote `@heroui/react`. Os estilos são disponibilizados separadamente pelo pacote `@heroui/styles`.
 
-As variáveis são lidas pelo Vite em tempo de build, via `import.meta.env`, em `src/api/client.js`:
+Entre os componentes utilizados estão:
 
-| Variável            | Descrição                                                                 |
-| ------------------- | ------------------------------------------------------------------------- |
-| `VITE_API_URL`      | Endereço da API                             |
-| `VITE_ORGANIZACAO`  | Slug da organização
+`Alert`, `Button`, `Card`, `Checkbox`, `Chip`, `Description`, `Dropdown`, `FieldError`, `Form`, `Input`, `InputGroup`, `Label`, `ListBox`, `Modal`, `Select`, `Spinner`, `Switch`, `Tabs`, `TextArea` e `TextField`.
 
-O arquivo `.env` não vai para o git; use o `env.example` como base.
+O helper `buttonVariants`, disponibilizado por `@heroui/styles`, permite aplicar estilos de botão a componentes como o `<Link>`.
 
-## Funcionalidades
+## ✨ Funcionalidades
 
-**Autenticação e conta**
+### 🔐 Autenticação e conta
 
-- Entrada (tela inicial), login, cadastro e recuperação de senha;
-- Renovação automática do token de acesso (refresh) e logout;
-- Perfil: editar nome e foto, alterar senha.
+- Tela inicial, login e cadastro de usuários.
+- Recuperação de senha.
+- Renovação automática do token de acesso (*refresh token*) e logout.
+- Edição do perfil, incluindo nome e foto.
+- Alteração de senha.
 
-**Paciente**
+### 👤 Área do paciente
 
-- Início com a próxima consulta e atalho para agendar;
-- Fluxo de agendamento em passos: escolher serviço → médico → horário → confirmar → enviado;
-- Minhas consultas divididas em "Próximos" e "Histórico" (com "Carregar mais");
-- Detalhe da consulta com ações conforme permissão (confirmar, concluir, cancelar);
-- Lista e perfil de médicos (com serviços e avaliações);
-- Avaliar uma consulta concluída com nota (1 a 5 estrelas) e comentário.
+- Página inicial com a próxima consulta e acesso rápido ao agendamento.
+- Agendamento dividido em etapas:
+  1. Escolha do serviço.
+  2. Seleção do médico.
+  3. Escolha do horário.
+  4. Confirmação dos dados.
+  5. Envio do agendamento.
+- Listagem de consultas separadas em **Próximos** e **Histórico**, com opção de carregar mais resultados.
+- Detalhes da consulta e ações disponíveis conforme as permissões.
+- Listagem e visualização dos perfis dos médicos, incluindo serviços e avaliações.
+- Avaliação de consultas concluídas com nota de 1 a 5 estrelas e comentário.
 
-**Administrador**
+### 🛠️ Área do administrador
 
-- Agenda do dia, filtrando por médico;
-- "A confirmar": lista de pedidos com confirmar/cancelar;
-- Avaliações, filtrando por médico e nota;
-- Dados do negócio: nome, descrição e logo;
-- Médicos: cadastro/edição, ativação e horários de disponibilidade por dia da semana;
-- Serviços: cadastro/edição com imagem, duração, preço e ativação.
+- Visualização da agenda do dia, com filtro por médico.
+- Gerenciamento de agendamentos pendentes de confirmação, incluindo confirmação e cancelamento.
+- Consulta e filtragem de avaliações por médico e nota.
+- Gerenciamento dos dados do negócio, incluindo nome, descrição e logotipo.
+- Cadastro e edição de médicos, ativação e configuração de horários de disponibilidade por dia da semana.
+- Cadastro e edição de serviços, com imagem, duração, preço e opção de ativação.
 
-## Tutorial para rodar
+## ⚙️ Instalação e execução
 
-1. Instale as dependências:
+### Pré-requisitos
 
-   ```bash
-   npm install
-   ```
+- [Node.js](https://nodejs.org/) instalado.
+- npm, instalado junto com o Node.js.
+- Acesso à API utilizada pela aplicação.
 
-2. Copie o arquivo de exemplo de variáveis de ambiente:
+### 1. Clone o repositório
 
-   ```bash
-   cp env.example .env
-   ```
-
-3. Preencha o `.env`:
-
-   ```env
-   VITE_API_URL=https://sua-api.com/api
-   VITE_ORGANIZACAO=consultorio-medico
-   ```
-
-4. Rode o app:
-
-   ```bash
-   npm run dev
-   ```
-
-5. Acesse http://localhost:5173
-
-### Publicando na Vercel
-
-- Importe o repositório na [Vercel](https://vercel.com/): ela reconhece o projeto Vite sozinho (`npm run build`, pasta `dist`);
-- Em **Environment Variables**, defina `VITE_API_URL` e `VITE_ORGANIZACAO`;
-- Faça o deploy.
-
-As variáveis são lidas no momento do build: ao trocar alguma, faça o deploy de novo.
-
-O `vercel.json` faz todas as rotas abrirem o `index.html`. Sem ele, recarregar a página em um endereço como `/consultas/9` daria erro 404, porque essas rotas só existem dentro do React (React Router).
-
-## Organização do código
-
+```bash
+git clone https://github.com/devigMurilo/consultorio-medico.git
 ```
+
+Entre na pasta do projeto:
+
+```bash
+cd consultorio-medico
+```
+
+### 2. Instale as dependências
+
+```bash
+npm install
+```
+
+### 3. Configure as variáveis de ambiente
+
+Copie o arquivo de exemplo:
+
+```bash
+cp env.example .env
+```
+
+No Windows, também é possível copiar o arquivo manualmente pelo explorador de arquivos ou utilizar:
+
+```powershell
+Copy-Item env.example .env
+```
+
+Edite o arquivo `.env` com os endereços e identificadores necessários:
+
+```env
+VITE_API_URL=https://sua-api.com/api
+VITE_ORGANIZACAO=consultorio-medico
+```
+
+> **Importante:** substitua o endereço de exemplo pela URL real da API utilizada no projeto.
+
+O arquivo `.env` não deve ser enviado ao Git. Utilize o `env.example` como modelo de configuração.
+
+### 4. Inicie o servidor de desenvolvimento
+
+```bash
+npm run dev
+```
+
+### 5. Acesse a aplicação
+
+Abra no navegador o endereço indicado pelo Vite, normalmente:
+
+[http://localhost:5173](http://localhost:5173)
+
+## ☁️ Publicação na Vercel
+
+O projeto pode ser publicado utilizando a [Vercel](https://vercel.com/).
+
+1. Importe o repositório do GitHub na Vercel.
+2. Configure as variáveis de ambiente `VITE_API_URL` e `VITE_ORGANIZACAO` em **Environment Variables**.
+3. Utilize `npm run build` como comando de build.
+4. Configure `dist` como diretório de saída, caso não seja detectado automaticamente.
+5. Realize o deploy.
+
+**Atenção:** as variáveis `VITE_*` são incorporadas à aplicação durante o build. Portanto, alterações nesses valores exigem uma nova compilação e publicação.
+
+O arquivo `vercel.json` configura o redirecionamento das rotas para `index.html`. Isso permite que caminhos como `/consultas/9` funcionem corretamente ao acessar ou atualizar uma página diretamente, mesmo utilizando o React Router.
+
+## 📁 Organização do código
+
+A estrutura principal do projeto está organizada da seguinte maneira:
+
+```text
 src/
-├── api/client.js      # fetch com o token, renovação automática e mensagens de erro
-├── AuthContext.js     # contexto com o usuário logado e as permissões (useAuth)
-├── AuthProvider.jsx   # login, logout e carregamento do usuário
-├── hooks/useApi.js    # useApi (buscar dados) e usePaginado (listas com "Carregar mais")
-├── formatos.js        # datas, horas e preços em pt-BR
-├── heroui.css         # import do tema do HeroUI + paleta de cores da marca
-├── components/        # peças reutilizadas: Menu, Layout, Erro, Carregando, ConsultaItem...
-└── pages/             # uma tela por arquivo
-    ├── agendar/       # fluxo de agendamento (C2 a C6)
-    └── admin/         # telas do administrador (A1 a A10)
+├── api/
+│   └── client.js          # Requisições à API, token e mensagens de erro
+├── AuthContext.js         # Contexto do usuário e suas permissões
+├── AuthProvider.jsx       # Login, logout e carregamento do usuário
+├── hooks/
+│   └── useApi.js          # Busca de dados e paginação
+├── formatos.js            # Formatação de datas, horas e preços em pt-BR
+├── heroui.css             # Tema do HeroUI e cores da marca
+├── components/            # Componentes reutilizáveis da interface
+└── pages/                 # Páginas da aplicação
+    ├── agendar/           # Etapas do fluxo de agendamento (C2 a C6)
+    └── admin/             # Telas administrativas (A1 a A10)
 ```
 
-As telas seguem os identificadores da especificação (E1, C1, A1...).
+As telas seguem os identificadores definidos na especificação do projeto, como `E1`, `C1` e `A1`.
 
+## 🎓 Inspiração e créditos
 
+Este projeto foi desenvolvido a partir do repositório de exemplo **[dvcirilo-ifrn/pos-escola-de-musica-web](https://github.com/dvcirilo-ifrn/pos-escola-de-musica-web)**, utilizado na disciplina de Programação Orientada a Serviços (POS) do IFRN — Campus São Paulo do Potengi.
 
-## Inspiração
+A aplicação foi adaptada do contexto de uma escola de música para o gerenciamento de um consultório médico.
 
-Este projeto foi construído a partir do repositório de exemplo **[dvcirilo-ifrn/pos-escola-de-musica-web](https://github.com/dvcirilo-ifrn/pos-escola-de-musica-web)**, da disciplina de POS do IFRN-SPP, adaptado do domínio de escola de música para o de consultório médico.
+---
+
+**Projeto acadêmico — Programação Orientada a Serviços (POS).**
